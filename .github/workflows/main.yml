@@ -19,6 +19,9 @@ jobs:
           cache: true
           go-version: ${{ matrix.go_version }}
 
+      - name: Install mockery
+        run: go install github.com/vektra/mockery/v2@latest
+
       - name: Go generate
         run: go generate ./...
 

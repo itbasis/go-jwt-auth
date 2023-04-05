@@ -8,7 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/golang-jwt/jwt/v5 v5.0.0-rc.2
-	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.4
+	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.5
 	github.com/itbasis/go-core-utils v0.0.0-20230402214723-b77cc3c63660
 	github.com/itbasis/go-log-utils v0.0.0-20230402220822-ec70c0b63460
 	github.com/itbasis/go-test-utils v0.0.0-20230402221840-41ee49a1c3c2

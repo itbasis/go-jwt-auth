@@ -79,8 +79,8 @@ github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/
 github.com/google/pprof v0.0.0-20230323073829-e72429f035bd h1:r8yyd+DJDmsUhGrRBxH5Pj7KeFK5l+Y3FsgT8keqKtk=
 github.com/google/pprof v0.0.0-20230323073829-e72429f035bd/go.mod h1:79YE0hCXdHag9sBkw2o+N/YnZtTkXi0UT9Nnixa5eYk=
 github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
-github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.4 h1:El46ekB3/2sEfvZm/cwyE0bPf6P31k13CE0jMqwWRHI=
-github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.4/go.mod h1:xbKERva94Pw2cPen0s79J3uXmGzbbpDYFBFDlZ4mV/w=
+github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.5 h1:3IZOAnD058zZllQTZNBioTlrzrBG/IjpiZ133IEtusM=
+github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.5/go.mod h1:xbKERva94Pw2cPen0s79J3uXmGzbbpDYFBFDlZ4mV/w=
 github.com/itbasis/go-core-utils v0.0.0-20230402214723-b77cc3c63660 h1:9EIfqVUzZk1v/rJ+cVKBbCB2zj6WFgVaMAI5ufVzDm8=
 github.com/itbasis/go-core-utils v0.0.0-20230402214723-b77cc3c63660/go.mod h1:cNNQdSOjjff5Zs/jzegBqujSFWrF7PLZumw74wnvres=
 github.com/itbasis/go-docker-utils v0.0.0-20230402215244-503e77724322 h1:OBfC2yb/hNhBOS9N77a9OM6MuRIpUsNMOdyTJVPRYV0=

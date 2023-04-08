@@ -16,6 +16,7 @@ type AnotherStruct struct{}
 
 func TestGetSessionUser(t *testing.T) {
 	RegisterFailHandler(Fail)
+	itbasisTestUtils.ConfigureTestLoggerForGinkgo()
 	RunSpecs(t, "SessionUser")
 }
 
@@ -24,14 +25,9 @@ var _ = Describe(
 
 		DescribeTable(
 			"Fail", func(testUser any, expectErr *status.Status) {
-				ctx := itbasisTestUtils.TestLoggerWithContext(
-					context.WithValue(
-						context.Background(),
-						model.SessionUser{},
-						testUser,
-					),
-				)
+				ctx := context.WithValue(context.Background(), model.SessionUser{}, testUser)
 				sessionUser, statusErr := shared.GetSessionUser(ctx)
+
 				Ω(sessionUser).To(BeNil())
 				Ω(statusErr).Should(Equal(expectErr))
 			},

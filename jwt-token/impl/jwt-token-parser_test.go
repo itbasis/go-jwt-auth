@@ -8,21 +8,18 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/jwt-token"
 	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/jwt-token/impl"
-	itbasisTestUtils "github.com/itbasis/go-test-utils"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe(
 	"Parsing with secret key", func() {
-		var ctx context.Context
 		var jwtToken itbasisJwtToken.JwtToken
 		mockClock := clock.NewMock()
 		secretKey := "test-key"
 
 		BeforeEach(
 			func() {
-				ctx = itbasisTestUtils.TestLoggerWithContext(context.Background())
 				var err error
 
 				jwtToken, err = itbasisJwtTokenImpl.NewJwtTokenCustomConfig(mockClock, itbasisJwtToken.Config{JwtSecretKey: secretKey})
@@ -32,7 +29,7 @@ var _ = Describe(
 
 		DescribeTable(
 			"Invalid token", func(testToken string, expectErr error) {
-				sessionUser, err := jwtToken.Parse(ctx, testToken)
+				sessionUser, err := jwtToken.Parse(context.Background(), testToken)
 				Ω(err).Should(MatchError(expectErr))
 				Ω(sessionUser).To(BeNil())
 			},

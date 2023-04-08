@@ -25,6 +25,7 @@ var sessionUserTestData = []itbasisJwtAuthModel.SessionUser{
 
 func TestJwtToken(t *testing.T) {
 	RegisterFailHandler(Fail)
+	itbasisTestUtils.ConfigureTestLoggerForGinkgo()
 
 	Ω(sessionUserTestData).NotTo(BeEmpty())
 
@@ -49,7 +50,7 @@ var _ = Describe(
 		for i, testSessionUser := range sessionUserTestData {
 			It(
 				fmt.Sprintf("Test #%d", i), func() {
-					ctx := itbasisTestUtils.TestLoggerWithContext(context.Background())
+					ctx := context.Background()
 					mockClock := clock.NewMock()
 					mockClock.Set(time.Now())
 

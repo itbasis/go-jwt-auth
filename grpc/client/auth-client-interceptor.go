@@ -5,7 +5,7 @@ import (
 
 	grpcMiddlewareMetadata "github.com/grpc-ecosystem/go-grpc-middleware/v2/metadata"
 	"github.com/itbasis/go-jwt-auth/model"
-	"github.com/pereslava/grpc_zerolog/ctxzerolog"
+	"github.com/rs/zerolog"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
@@ -43,7 +43,7 @@ func (receiver *AuthClientInterceptor) UnaryStreamHeaderAuthorizeForwarder() grp
 }
 
 func (receiver *AuthClientInterceptor) interceptor(ctx context.Context) context.Context {
-	logger := ctxzerolog.Get(ctx).Logger()
+	logger := zerolog.Ctx(ctx)
 
 	headerValue := grpcMiddlewareMetadata.ExtractIncoming(ctx).Get(model.HeaderAuthorize)
 	logger.Trace().Msgf("headerValue: %s", headerValue)

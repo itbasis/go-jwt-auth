@@ -10,7 +10,7 @@ import (
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/jwt-token"
 	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/jwt-token/impl"
 	"github.com/itbasis/go-jwt-auth/model"
-	"github.com/pereslava/grpc_zerolog/ctxzerolog"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
@@ -35,7 +35,7 @@ func NewAuthInterceptorWithCustomParser(jwtToken itbasisJwtToken.JwtToken) *Auth
 
 func (receiver *AuthInterceptor) AuthHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		logger := ctxzerolog.Get(ctx).Logger()
+		logger := zerolog.Ctx(ctx)
 
 		jwtToken, err := receiver.ginGetHeaderAuthorization(ctx)
 		if errors.Is(err, ErrorAuthTokenNotFound) {
@@ -62,7 +62,7 @@ func (receiver *AuthInterceptor) AuthHandler() gin.HandlerFunc {
 }
 
 func (receiver *AuthInterceptor) ginGetHeaderAuthorization(ctx *gin.Context) (string, error) {
-	logger := ctxzerolog.Get(ctx).Logger()
+	logger := zerolog.Ctx(ctx)
 
 	authHeaderValue := strings.TrimSpace(ctx.GetHeader(model.HeaderAuthorize))
 	logger.Trace().Msgf("auth header value: %v", authHeaderValue)

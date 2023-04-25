@@ -3,7 +3,7 @@ module github.com/itbasis/go-jwt-auth
 go 1.20
 
 require (
-	github.com/benbjohnson/clock v1.3.1
+	github.com/benbjohnson/clock v1.3.3
 	github.com/dchest/uniuri v1.2.0
 	github.com/gin-gonic/gin v1.9.0
 	github.com/gofrs/uuid/v5 v5.0.0
@@ -22,7 +22,7 @@ require (
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
-	github.com/bytedance/sonic v1.8.7 // indirect
+	github.com/bytedance/sonic v1.8.8 // indirect
 	github.com/caarlos0/env/v7 v7.1.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect

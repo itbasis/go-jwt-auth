@@ -45,21 +45,21 @@ func (receiver *JwtTokenImpl) parseWithSecretKey(ctx context.Context, tokenStrin
 	)
 
 	if err != nil {
-		logger.Error().Err(err).Msgf("")
+		logger.Error().Err(err).Send()
 
 		return nil, err
 	}
 
 	// TODO check - this seems like a redundant check
 	if !token.Valid {
-		logger.Error().Err(jwt.ErrTokenUnverifiable).Msg("")
+		logger.Error().Err(jwt.ErrTokenUnverifiable).Send()
 
 		return nil, jwt.ErrTokenUnverifiable
 	}
 
 	claims, ok := token.Claims.(*itbasisJwtToken.SessionUserClaims)
 	if !ok {
-		logger.Error().Err(jwt.ErrTokenInvalidClaims).Msgf("")
+		logger.Error().Err(jwt.ErrTokenInvalidClaims).Send()
 
 		return nil, jwt.ErrTokenInvalidClaims
 	}

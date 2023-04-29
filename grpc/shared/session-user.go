@@ -17,7 +17,7 @@ func GetSessionUser(ctx context.Context) (*model.SessionUser, *status.Status) {
 
 	if sessionUser == nil {
 		errorSessionWithoutAuth := ErrSessionWithoutAuth
-		logger.Error().Err(errorSessionWithoutAuth.Err()).Msg("")
+		logger.Error().Err(errorSessionWithoutAuth.Err()).Send()
 
 		return nil, errorSessionWithoutAuth
 	}

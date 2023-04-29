@@ -11,7 +11,7 @@ func GetSessionUser(ctx *gin.Context) (*model.SessionUser, error) {
 
 	value, exists := ctx.Get(ctxSessionUser)
 	if !exists {
-		logger.Error().Err(ErrorSessionWithoutAuth).Msg("")
+		logger.Error().Err(ErrorSessionWithoutAuth).Send()
 
 		return nil, ErrorSessionWithoutAuth
 	}
@@ -20,7 +20,7 @@ func GetSessionUser(ctx *gin.Context) (*model.SessionUser, error) {
 
 	sessionUser, ok := value.(*model.SessionUser)
 	if !ok {
-		logger.Error().Err(ErrorSessionInvalidUser).Msg("")
+		logger.Error().Err(ErrorSessionInvalidUser).Send()
 
 		return nil, ErrorSessionInvalidUser
 	}

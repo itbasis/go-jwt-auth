@@ -21,7 +21,7 @@ type AuthServerInterceptor struct {
 func NewAuthServerInterceptor() *AuthServerInterceptor {
 	jwtToken, err := itbasisJwtTokenImpl.NewJwtToken(clock.New())
 	if err != nil {
-		log.Error().Err(err).Msg("")
+		log.Error().Err(err).Send()
 
 		return nil
 	}
@@ -48,7 +48,7 @@ func (receiver *AuthServerInterceptor) GetAuthFunc() grpcAuth.AuthFunc {
 
 		jwtToken, err := grpcAuth.AuthFromMD(ctx, itbasisJwtAuthModel.AuthSchemaBearer)
 		if err != nil {
-			logger.Trace().Err(err).Msg("")
+			logger.Trace().Err(err).Send()
 
 			return ctx, err
 		}
@@ -57,7 +57,7 @@ func (receiver *AuthServerInterceptor) GetAuthFunc() grpcAuth.AuthFunc {
 
 		authUser, err := receiver.jwtToken.Parse(ctx, jwtToken)
 		if err != nil {
-			logger.Error().Err(err).Msg("")
+			logger.Error().Err(err).Send()
 			// FIXME handle parsing error
 
 			return ctx, itbasisJwtAuthGrpcShared.ErrAuthenticationRequired.Err()

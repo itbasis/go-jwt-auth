@@ -21,7 +21,7 @@ type AuthInterceptor struct {
 func NewAuthInterceptor() *AuthInterceptor {
 	jwtToken, err := itbasisJwtTokenImpl.NewJwtToken(clock.New())
 	if err != nil {
-		log.Error().Err(err).Msg("")
+		log.Error().Err(err).Send()
 
 		return nil
 	}
@@ -39,7 +39,7 @@ func (receiver *AuthInterceptor) AuthHandler() gin.HandlerFunc {
 
 		jwtToken, err := receiver.ginGetHeaderAuthorization(ctx)
 		if errors.Is(err, ErrorAuthTokenNotFound) {
-			logger.Trace().Err(err).Msg("")
+			logger.Trace().Err(err).Send()
 
 			ctx.Set(ctxSessionUser, nil)
 
@@ -50,7 +50,7 @@ func (receiver *AuthInterceptor) AuthHandler() gin.HandlerFunc {
 
 		authUser, err := receiver.jwtToken.Parse(ctx, jwtToken)
 		if err != nil {
-			logger.Error().Err(err).Msg("")
+			logger.Error().Err(err).Send()
 
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 		}
@@ -68,7 +68,7 @@ func (receiver *AuthInterceptor) ginGetHeaderAuthorization(ctx *gin.Context) (st
 	logger.Trace().Msgf("auth header value: %v", authHeaderValue)
 
 	if authHeaderValue == "" {
-		logger.Trace().Err(ErrorAuthTokenNotFound).Msg("")
+		logger.Trace().Err(ErrorAuthTokenNotFound).Send()
 
 		return "", ErrorAuthTokenNotFound
 	}

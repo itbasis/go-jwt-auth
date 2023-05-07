@@ -36,7 +36,7 @@ var _ = Describe(
 
 		It(
 			"test empty config", func() {
-				Ω(itbasisCoreUtils.ReadEnvConfigWithLogger(&itbasisTestUtils.TestLogger, &config)).Should(Succeed())
+				Ω(itbasisCoreUtils.ReadEnvConfigWithLogger(&itbasisTestUtils.TestLogger, &config, nil)).Should(Succeed())
 				Ω(config.JwtSecretKey).To(BeEmpty())
 				Ω(config.JwtSigningMethod).To(Equal("HS512"))
 				Ω(config.JwtAccessTokenDurationInSeconds).To(Equal(itbasisJwtToken.TokenDuration(itbasisJwtToken.DefaultAccessTokenDuration)))
@@ -54,7 +54,7 @@ var _ = Describe(
 				Ω(os.Setenv(envJwtAccessTokenDurationInSeconds, "20")).Should(Succeed())
 				Ω(os.Setenv(envJwtRefreshTokenDurationInSeconds, "30")).Should(Succeed())
 
-				Ω(itbasisCoreUtils.ReadEnvConfigWithLogger(&itbasisTestUtils.TestLogger, &config)).Should(Succeed())
+				Ω(itbasisCoreUtils.ReadEnvConfigWithLogger(&itbasisTestUtils.TestLogger, &config, nil)).Should(Succeed())
 				Ω(config.JwtSecretKey).To(Equal(testKey.String()))
 				Ω(config.JwtSigningMethod).To(Equal("HS256"))
 				Ω(config.JwtAccessTokenDurationInSeconds).To(Equal(itbasisJwtToken.TokenDuration(time.Second * 20)))

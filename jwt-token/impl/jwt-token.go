@@ -27,7 +27,7 @@ type JwtTokenImpl struct {
 func NewJwtToken(clock clock.Clock) (itbasisJwtToken.JwtToken, error) {
 	config := itbasisJwtToken.Config{}
 
-	if err := itbasisCoreUtils.ReadEnvConfig(&config); err != nil {
+	if err := itbasisCoreUtils.ReadEnvConfig(&config, nil); err != nil {
 		return nil, err //nolint:wrapcheck
 	}
 

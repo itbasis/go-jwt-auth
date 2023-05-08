@@ -10,7 +10,7 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.0.0
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.5
 	github.com/itbasis/go-core-utils v0.1.0
-	github.com/itbasis/go-log-utils v0.0.3
+	github.com/itbasis/go-log-utils v0.0.4
 	github.com/itbasis/go-test-utils v0.0.2
 	github.com/onsi/ginkgo/v2 v2.9.4
 	github.com/onsi/gomega v1.27.6

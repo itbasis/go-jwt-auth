@@ -3,7 +3,7 @@ module github.com/itbasis/go-jwt-auth
 go 1.20
 
 require (
-	github.com/benbjohnson/clock v1.3.3
+	github.com/benbjohnson/clock v1.3.4
 	github.com/dchest/uniuri v1.2.0
 	github.com/gin-gonic/gin v1.9.0
 	github.com/gofrs/uuid/v5 v5.0.0

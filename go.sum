@@ -88,8 +88,8 @@ github.com/itbasis/go-docker-utils v0.0.1 h1:UW+AG2qMaGn+nHM6FT1ATI0h0xbxWRgJnMI
 github.com/itbasis/go-docker-utils v0.0.1/go.mod h1:Hbb3VP4zBd+qPpSCcgXOAHMEjbu7zmiwK2YY5X9oumU=
 github.com/itbasis/go-log-utils v0.0.4 h1:8lnIMt84yaGm05EQKagx/F3AWM2UXfebNXo8nSIkLbA=
 github.com/itbasis/go-log-utils v0.0.4/go.mod h1:2yGhNqrhXaCPhf3ZYlFKQbMtwSUAwBAoR47KtajxkUw=
-github.com/itbasis/go-test-utils v0.0.3 h1:Ef4xf/uE3ULYvNehDcEE/PRlwG5rAbJih7RzCqIusQo=
-github.com/itbasis/go-test-utils v0.0.3/go.mod h1:K0h+q3NouL5tvWzkg2FKIAOrrjPnbtcXOFJN/cxBnq0=
+github.com/itbasis/go-test-utils v0.0.4 h1:Kbqf4iI4vqXwrUMUB7R5FFm1M6FlA0ajJcQKidlLHNY=
+github.com/itbasis/go-test-utils v0.0.4/go.mod h1:Gs3yD1NCMaGCkDmo6wxRoWCyl++4inRHbNFxr1c++cg=
 github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
 github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
 github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a h1:bbPeKD0xmW/Y25WS6cokEszi5g+S0QxI/d45PkRi7Nk=

@@ -13,7 +13,7 @@ require (
 	github.com/itbasis/go-log-utils v0.0.6
 	github.com/itbasis/go-test-utils v0.0.6
 	github.com/onsi/ginkgo/v2 v2.9.7
-	github.com/onsi/gomega v1.27.7
+	github.com/onsi/gomega v1.27.8
 	github.com/pereslava/grpc_zerolog v0.0.3
 	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.4

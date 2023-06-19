@@ -17,11 +17,10 @@ require (
 	github.com/pereslava/grpc_zerolog v0.0.3
 	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.4
-	google.golang.org/grpc v1.55.0
+	google.golang.org/grpc v1.56.0
 )
 
 require (
-	cloud.google.com/go/compute v1.19.0 // indirect
 	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/caarlos0/env/v8 v8.0.0 // indirect

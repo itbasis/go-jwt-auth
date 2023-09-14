@@ -2,38 +2,29 @@ package shared_test
 
 import (
 	"context"
-	"testing"
 
-	"github.com/itbasis/go-jwt-auth/grpc/shared"
-	"github.com/itbasis/go-jwt-auth/model"
-	itbasisTestUtils "github.com/itbasis/go-test-utils"
+	model2 "github.com/itbasis/go-jwt-auth/v2/grpc/shared"
+	"github.com/itbasis/go-jwt-auth/v2/model"
+	_ "github.com/itbasis/go-test-utils/v2"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"google.golang.org/grpc/status"
 )
 
 type AnotherStruct struct{}
 
-func TestGetSessionUser(t *testing.T) {
-	RegisterFailHandler(Fail)
-	itbasisTestUtils.ConfigureTestLoggerForGinkgo()
-	RunSpecs(t, "SessionUser")
-}
-
 var _ = Describe(
 	"SessionUser", func() {
-
 		DescribeTable(
-			"Fail", func(testUser any, expectErr *status.Status) {
+			"Fail", func(testUser any, expectErr error) {
 				ctx := context.WithValue(context.Background(), model.SessionUser{}, testUser)
-				sessionUser, statusErr := shared.GetSessionUser(ctx)
+				sessionUser, err := model2.GetSessionUser(ctx)
 
 				Ω(sessionUser).To(BeNil())
-				Ω(statusErr).Should(Equal(expectErr))
+				Ω(err).Should(MatchError(ContainSubstring(expectErr.Error())))
 			},
-			Entry("When SessionUser is nil", nil, shared.ErrSessionWithoutAuth),
-			Entry("When SessionUser not is interface", &AnotherStruct{}, shared.ErrSessionWithoutAuth),
-			Entry("When SessionUser is invalid", &model.SessionUser{}, shared.ErrSessionInvalidUser),
+			Entry("When SessionUser is nil", nil, model.ErrSessionWithoutAuth),
+			Entry("When SessionUser not is interface", &AnotherStruct{}, model.ErrSessionWithoutAuth),
+			Entry("When SessionUser is invalid", &model.SessionUser{}, model.ErrSessionInvalidUser),
 		)
 	},
 )

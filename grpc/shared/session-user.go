@@ -4,29 +4,36 @@ import (
 	"context"
 
 	"github.com/gofrs/uuid/v5"
-	"github.com/itbasis/go-jwt-auth/model"
-	"github.com/rs/zerolog"
-	"google.golang.org/grpc/status"
+	"github.com/itbasis/go-jwt-auth/v2/model"
+	"github.com/juju/zaputil/zapctx"
+	"github.com/pkg/errors"
 )
 
-func GetSessionUser(ctx context.Context) (*model.SessionUser, *status.Status) {
-	logger := zerolog.Ctx(ctx)
+func GetSessionUser(ctx context.Context) (*model.SessionUser, error) {
+	logger := zapctx.Logger(ctx).Sugar()
 
 	sessionUser, ok := ctx.Value(model.SessionUser{}).(*model.SessionUser)
-	logger.Trace().Msgf(model.LogSessionUser, sessionUser)
+	logger.Debugf(model.LogSessionUser, sessionUser)
 
 	if sessionUser == nil {
-		errorSessionWithoutAuth := ErrSessionWithoutAuth
-		logger.Error().Err(errorSessionWithoutAuth.Err()).Send()
+		err := errors.Wrap(model.ErrSessionWithoutAuth, "SessionUser is nil")
+		logger.Error(err)
 
-		return nil, errorSessionWithoutAuth
+		return nil, err
+	}
+
+	if !ok {
+		err := errors.Wrap(model.ErrSessionInvalidUser, "model cannot be cast to SessionUser")
+		logger.Error(err)
+
+		return nil, err
 	}
 
 	if !ok || sessionUser.UID == uuid.Nil {
-		errorSessionInvalidUser := ErrSessionInvalidUser
-		logger.Error().Err(errorSessionInvalidUser.Err()).Msgf(model.LogSessionUser, sessionUser)
+		err := errors.Wrap(model.ErrSessionInvalidUser, "sessionUser UID is nil")
+		logger.Error(err)
 
-		return nil, errorSessionInvalidUser
+		return nil, err
 	}
 
 	return sessionUser, nil

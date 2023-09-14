@@ -1,4 +1,3 @@
-//go:generate mockery --all
 package jwttoken
 
 import (
@@ -6,7 +5,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/itbasis/go-jwt-auth/model"
+	"github.com/itbasis/go-jwt-auth/v2/model"
 )
 
 type JwtToken interface {

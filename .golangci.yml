@@ -30,7 +30,7 @@ linters:
     - goerr113
     - goimports
     - gomnd
-    - gomoddirectives
+#    - gomoddirectives
     - gosec
     - misspell
     - nilerr
@@ -39,7 +39,6 @@ linters:
     - prealloc
     - promlinter
     - revive
-    - structcheck
     - wastedassign
     - tagliatelle
     - tenv
@@ -53,6 +52,7 @@ linters:
     - wrapcheck
     - wsl
     - ginkgolinter
+    - unused
 #    - interfacebloat
 
 linters-settings:

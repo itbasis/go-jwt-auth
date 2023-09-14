@@ -5,15 +5,17 @@ import (
 	"fmt"
 
 	"github.com/golang-jwt/jwt/v5"
-	itbasisJwtToken "github.com/itbasis/go-jwt-auth/jwt-token"
-	"github.com/itbasis/go-jwt-auth/model"
-	"github.com/rs/zerolog"
+	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
+	"github.com/itbasis/go-jwt-auth/v2/model"
+	"github.com/juju/zaputil/zapctx"
+	"github.com/pkg/errors"
+	"go.uber.org/zap"
 )
 
 func (receiver *JwtTokenImpl) Parse(ctx context.Context, tokenString string) (*model.SessionUser, error) {
-	logger := zerolog.Ctx(ctx)
+	logger := zapctx.Logger(ctx).Sugar()
 
-	logger.Trace().Msgf("tokenString: %s", tokenString)
+	logger.Debugf("tokenString: %s", tokenString)
 
 	// TODO Adding Firebase parsing
 
@@ -21,71 +23,89 @@ func (receiver *JwtTokenImpl) Parse(ctx context.Context, tokenString string) (*m
 }
 
 func (receiver *JwtTokenImpl) parseWithSecretKey(ctx context.Context, tokenString string) (*model.SessionUser, error) {
-	logger := zerolog.Ctx(ctx)
+	logger := zapctx.Logger(ctx).Sugar()
 
-	logger.Trace().Msgf("tokenString: %s", tokenString)
+	logger.Debugf("tokenString: %s", tokenString)
 
 	token, err := jwt.ParseWithClaims(
 		tokenString, &itbasisJwtToken.SessionUserClaims{}, func(token *jwt.Token) (interface{}, error) {
 			method, ok := token.Method.(*jwt.SigningMethodHMAC)
 			if !ok {
 				alg := token.Header["alg"]
-				logger.Trace().Msgf("alg: %s", alg)
+				logger.Debugf("alg: %s", alg)
 
-				logger.Error().Err(itbasisJwtToken.ErrUnsupportedSigningMethod).Msgf("token signing algorithm: %v", alg)
+				err := errors.Wrap(itbasisJwtToken.ErrUnsupportedSigningMethod, fmt.Sprintf("token signing algorithm: %v", alg))
+				logger.Error(err)
 
-				return nil, fmt.Errorf("%w: %v", itbasisJwtToken.ErrUnsupportedSigningMethod, alg)
+				return nil, err
 			}
 
-			logger.Debug().Msgf("method: %v", method)
-			logger.Trace().Msgf("using signSecretKey: %s", string(receiver.signSecretKey))
+			logger.Debugf("method: %v", method)
+			logger.Debugf("using signSecretKey: %s", string(receiver.signSecretKey))
 
 			return receiver.signSecretKey, nil
 		},
 	)
 
 	if err != nil {
-		logger.Error().Err(err).Send()
+		err = errors.Wrap(itbasisJwtToken.ErrParsingClaims, err.Error())
+		logger.Error(err)
 
 		return nil, err
 	}
 
 	// TODO check - this seems like a redundant check
 	if !token.Valid {
-		logger.Error().Err(jwt.ErrTokenUnverifiable).Send()
+		logger.Error(jwt.ErrTokenUnverifiable)
 
 		return nil, jwt.ErrTokenUnverifiable
 	}
 
 	claims, ok := token.Claims.(*itbasisJwtToken.SessionUserClaims)
 	if !ok {
-		logger.Error().Err(jwt.ErrTokenInvalidClaims).Send()
+		logger.Error(jwt.ErrTokenInvalidClaims)
 
 		return nil, jwt.ErrTokenInvalidClaims
 	}
 
-	logger.Debug().Msgf("claims: %++v", claims)
+	logger.Debugf("claims: %++v", claims)
 
-	sessionUser := &model.SessionUser{}
+	return receiver.enrichSessionUser(logger, claims)
+}
+
+func (receiver *JwtTokenImpl) enrichSessionUser(logger *zap.SugaredLogger, claims *itbasisJwtToken.SessionUserClaims) (
+	sessionUser *model.SessionUser,
+	err error,
+) {
+	logger.Debugf("claims: %++v", claims)
+
+	sessionUser = &model.SessionUser{}
 
 	if !claims.UID.IsNil() {
 		sessionUser.UID = claims.UID
 	} else {
-		logger.Error().Err(itbasisJwtToken.ErrTokenInvalidUID).Msgf("claims: %++v", claims)
+		err = errors.Wrap(itbasisJwtToken.ErrTokenInvalidUID, "UID is nil")
+		logger.Error(err)
+
+		return nil, err
 	}
 
 	if len(claims.Issuer) > 0 {
 		sessionUser.Username = claims.Issuer
 	} else {
-		logger.Error().Err(jwt.ErrTokenInvalidIssuer).Msgf("claims: %++v", claims)
+		err = errors.Wrap(jwt.ErrTokenInvalidIssuer, "is empty")
+		logger.Error(err)
 
-		return nil, jwt.ErrTokenInvalidIssuer
+		return nil, err
 	}
 
 	if len(claims.Email) > 0 {
 		sessionUser.Email = claims.Email
 	} else {
-		logger.Error().Err(itbasisJwtToken.ErrTokenInvalidEmail).Msgf("claims: %++v", claims)
+		err = errors.Wrap(itbasisJwtToken.ErrTokenInvalidEmail, "is empty")
+		logger.Error(err)
+
+		return nil, err
 	}
 
 	// TODO sessionUser.hasGuest

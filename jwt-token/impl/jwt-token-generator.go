@@ -2,13 +2,13 @@ package impl
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	itbasisJwtToken "github.com/itbasis/go-jwt-auth/jwt-token"
-	"github.com/itbasis/go-jwt-auth/model"
-	"github.com/rs/zerolog"
+	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
+	"github.com/itbasis/go-jwt-auth/v2/model"
+	"github.com/juju/zaputil/zapctx"
+	"github.com/pkg/errors"
 )
 
 var ErrCreatingToken = errors.New("error creating token")
@@ -26,11 +26,11 @@ func (receiver *JwtTokenImpl) CreateTokenCustomDuration(ctx context.Context, ses
 	*time.Time,
 	error,
 ) {
-	logger := zerolog.Ctx(ctx)
+	logger := zapctx.Logger(ctx).Sugar()
 
 	now := receiver.clock.Now()
 	expiredAt := now.Add(expiredAtDuration)
-	logger.Debug().Msgf("expiredAt: %s", expiredAt)
+	logger.Debugf("expiredAt: %s", expiredAt)
 
 	claims := &itbasisJwtToken.SessionUserClaims{
 		UID: sessionUser.UID,
@@ -40,18 +40,23 @@ func (receiver *JwtTokenImpl) CreateTokenCustomDuration(ctx context.Context, ses
 			ExpiresAt: jwt.NewNumericDate(expiredAt),
 		},
 	}
-	logger.Debug().Msgf("claims: %++v", claims)
+	if len(sessionUser.Email) > 0 {
+		claims.Email = sessionUser.Email
+	}
+
+	logger.Debugf("claims: %++v", claims)
 
 	token := jwt.NewWithClaims(receiver.signMethod, claims)
 
 	signedString, err := token.SignedString(receiver.signSecretKey)
 	if err != nil {
-		logger.Error().Err(err).Msg(ErrCreatingToken.Error())
+		err = errors.Wrap(ErrCreatingToken, err.Error())
+		logger.Error(err)
 
-		return "", nil, ErrCreatingToken
+		return "", nil, err
 	}
 
-	logger.Trace().Msgf("access token: %s", signedString)
+	logger.Debugf("access token: %s", signedString)
 
 	return signedString, &expiredAt, nil
 }

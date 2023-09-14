@@ -1,0 +1,5 @@
+with-expecter: True
+packages:
+  github.com/itbasis/go-jwt-auth/v2/jwt-token:
+    config:
+      all: True

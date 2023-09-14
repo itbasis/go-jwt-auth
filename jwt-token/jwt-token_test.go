@@ -3,72 +3,153 @@ package jwttoken_test
 import (
 	"context"
 	"fmt"
-	"os"
-	"testing"
 	"time"
 
-	"github.com/benbjohnson/clock"
 	"github.com/gofrs/uuid/v5"
-	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/jwt-token/impl"
-	itbasisJwtAuthModel "github.com/itbasis/go-jwt-auth/model"
-	itbasisLogUtils "github.com/itbasis/go-log-utils"
-	itbasisTestUtils "github.com/itbasis/go-test-utils"
+	"github.com/golang-jwt/jwt/v5"
+	"github.com/itbasis/go-clock"
+	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
+	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
+	itbasisJwtAuthModel "github.com/itbasis/go-jwt-auth/v2/model"
+	testUtils "github.com/itbasis/go-test-utils/v2"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"github.com/rs/zerolog/log"
 )
-
-var sessionUserTestData = []itbasisJwtAuthModel.SessionUser{
-	{Username: "test-user"},
-	{UID: uuid.FromStringOrNil("39910003-f693-44ae-979f-f83714a6d459"), Username: "test-user"},
-}
-
-func TestJwtToken(t *testing.T) {
-	RegisterFailHandler(Fail)
-	itbasisTestUtils.ConfigureTestLoggerForGinkgo()
-
-	Ω(sessionUserTestData).NotTo(BeEmpty())
-
-	RunSpecs(t, "JwtToken")
-}
 
 var _ = Describe(
 	"JwtToken", func() {
-		itbasisLogUtils.ConfigureDefaultContextLogger(false)
+		var (
+			jwtTokenConfig = itbasisJwtToken.Config{
+				JwtSecretKey:                     "test-key",
+				JwtSigningMethod:                 "HS512",
+				JwtAccessTokenDurationInSeconds:  itbasisJwtToken.TokenDuration(5 * time.Second),
+				JwtRefreshTokenDurationInSeconds: itbasisJwtToken.TokenDuration(5 * time.Second),
+			}
+			mockClock = clock.NewMock()
+			logger    = testUtils.TestLogger.Sugar()
+		)
 
 		BeforeEach(
 			func() {
-				originalEnvJwtSecretKey := os.Getenv(envJwtSecretKey)
-				DeferCleanup(
-					func() {
-						Ω(os.Setenv(envJwtSecretKey, originalEnvJwtSecretKey)).Should(Succeed())
+				mockClock.Set(time.Now())
+			},
+		)
+
+		Context(
+			"Success creating access token", func() {
+				var sessionUserTestData = []itbasisJwtAuthModel.SessionUser{
+					{Username: "test-user"},
+					{UID: uuid.FromStringOrNil("39910003-f693-44ae-979f-f83714a6d459"), Username: "test-user", Email: "test@example.org"},
+				}
+
+				for i, testSessionUser := range sessionUserTestData {
+					It(
+						fmt.Sprintf("Test #%d", i), func() {
+							ctx := context.Background()
+
+							jwtToken, err := itbasisJwtTokenImpl.NewJwtTokenCustomConfig(mockClock, jwtTokenConfig)
+							Ω(err).Should(Succeed())
+
+							accessToken, _, err := jwtToken.CreateAccessToken(ctx, testSessionUser)
+							Ω(err).Should(Succeed())
+							Ω(accessToken).NotTo(BeEmpty())
+
+							Ω(jwtToken.Parse(ctx, accessToken)).To(HaveValue(Equal(testSessionUser)))
+						},
+					)
+				}
+			},
+		)
+
+		DescribeTable(
+			"Empty fields", func(testSessionUser itbasisJwtAuthModel.SessionUser, expectErr error) {
+				ctx := context.Background()
+
+				jwtToken, err := itbasisJwtTokenImpl.NewJwtTokenCustomConfig(mockClock, jwtTokenConfig)
+				Ω(err).Should(Succeed())
+
+				accessToken, _, err := jwtToken.CreateAccessToken(ctx, testSessionUser)
+				Ω(accessToken).NotTo(BeEmpty())
+				Ω(err).Should(Succeed())
+				logger.Infof("accessToken: %s", accessToken)
+
+			},
+			Entry(
+				"empty email", itbasisJwtAuthModel.SessionUser{
+					UID:      uuid.FromStringOrNil("39910003-f693-44ae-979f-f83714a6d459"),
+					Username: "test-user",
+				}, itbasisJwtToken.ErrTokenInvalidEmail,
+			),
+		)
+
+		Context(
+			"Empty fields", func() {
+				It(
+					"empty email", func() {
+						ctx := context.Background()
+
+						jwtToken, err := itbasisJwtTokenImpl.NewJwtTokenCustomConfig(mockClock, jwtTokenConfig)
+						Ω(err).Should(Succeed())
+
+						testSessionUser := itbasisJwtAuthModel.SessionUser{
+							UID:      uuid.FromStringOrNil("39910003-f693-44ae-979f-f83714a6d459"),
+							Username: "test-user",
+						}
+
+						accessToken, _, err := jwtToken.CreateAccessToken(ctx, testSessionUser)
+						Ω(accessToken).NotTo(BeEmpty())
+						Ω(err).Should(Succeed())
+						logger.Infof("accessToken: %s", accessToken)
+
+						Ω(jwtToken.Parse(ctx, accessToken)).Error().Should(MatchError(itbasisJwtToken.ErrTokenInvalidEmail))
+					},
+				)
+
+				It(
+					"empty UID", func() {
+						ctx := context.Background()
+
+						jwtToken, err := itbasisJwtTokenImpl.NewJwtTokenCustomConfig(mockClock, jwtTokenConfig)
+						Ω(err).Should(Succeed())
+
+						testSessionUser := itbasisJwtAuthModel.SessionUser{
+							Username: "test-user",
+						}
+
+						accessToken, _, err := jwtToken.CreateAccessToken(ctx, testSessionUser)
+						Ω(accessToken).NotTo(BeEmpty())
+						Ω(err).Should(Succeed())
+						logger.Infof("accessToken: %s", accessToken)
+
+						Ω(jwtToken.Parse(ctx, accessToken)).
+							Error().Should(
+							SatisfyAll(
+								MatchError(ContainSubstring(itbasisJwtToken.ErrTokenInvalidUID.Error())),
+							),
+						)
+					},
+				)
+
+				It(
+					"empty issuer", func() {
+						ctx := context.Background()
+
+						jwtToken, err := itbasisJwtTokenImpl.NewJwtTokenCustomConfig(mockClock, jwtTokenConfig)
+						Ω(err).Should(Succeed())
+
+						testSessionUser := itbasisJwtAuthModel.SessionUser{
+							UID: uuid.FromStringOrNil("39910003-f693-44ae-979f-f83714a6d459"),
+						}
+
+						accessToken, _, err := jwtToken.CreateAccessToken(ctx, testSessionUser)
+						Ω(accessToken).NotTo(BeEmpty())
+						Ω(err).Should(Succeed())
+						logger.Infof("accessToken: %s", accessToken)
+
+						Ω(jwtToken.Parse(ctx, accessToken)).Error().Should(MatchError(jwt.ErrTokenInvalidIssuer))
 					},
 				)
 			},
 		)
-
-		for i, testSessionUser := range sessionUserTestData {
-			It(
-				fmt.Sprintf("Test #%d", i), func() {
-					ctx := context.Background()
-					mockClock := clock.NewMock()
-					mockClock.Set(time.Now())
-
-					Ω(os.Setenv(envJwtSecretKey, "test-key")).Should(Succeed())
-
-					jwtToken, err := itbasisJwtTokenImpl.NewJwtToken(mockClock)
-					Ω(err).Should(Succeed())
-
-					accessToken, _, err := jwtToken.CreateAccessToken(ctx, testSessionUser)
-					Ω(err).Should(Succeed())
-					Ω(accessToken).NotTo(BeEmpty())
-					log.Info().Msgf("accessToken: %s", accessToken)
-
-					sessionUser, err := jwtToken.Parse(ctx, accessToken)
-					Ω(err).Should(Succeed())
-					Ω(*sessionUser).To(Equal(testSessionUser))
-				},
-			)
-		}
 	},
 )

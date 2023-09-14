@@ -3,20 +3,23 @@ package impl_test
 import (
 	"context"
 
-	"github.com/benbjohnson/clock"
 	"github.com/dchest/uniuri"
 	"github.com/golang-jwt/jwt/v5"
-	itbasisJwtToken "github.com/itbasis/go-jwt-auth/jwt-token"
-	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/jwt-token/impl"
+	"github.com/itbasis/go-clock"
+	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
+	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
+	_ "github.com/itbasis/go-test-utils/v2"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe(
-	"Parsing with secret key", func() {
-		var jwtToken itbasisJwtToken.JwtToken
-		mockClock := clock.NewMock()
-		secretKey := "test-key"
+	"Parsing token", func() {
+		var (
+			jwtToken  itbasisJwtToken.JwtToken
+			mockClock = clock.NewMock()
+			secretKey = "test-key"
+		)
 
 		BeforeEach(
 			func() {
@@ -29,12 +32,11 @@ var _ = Describe(
 
 		DescribeTable(
 			"Invalid token", func(testToken string, expectErr error) {
-				sessionUser, err := jwtToken.Parse(context.Background(), testToken)
-				Ω(err).Should(MatchError(expectErr))
-				Ω(sessionUser).To(BeNil())
+				Ω(jwtToken.Parse(context.Background(), testToken)).Error().Should(MatchError(ContainSubstring(expectErr.Error())))
 			},
 			Entry("empty token", "", jwt.ErrTokenMalformed),
 			Entry("random string", uniuri.New(), jwt.ErrTokenMalformed),
 		)
+
 	},
 )

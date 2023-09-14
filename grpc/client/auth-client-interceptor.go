@@ -4,8 +4,8 @@ import (
 	"context"
 
 	grpcMiddlewareMetadata "github.com/grpc-ecosystem/go-grpc-middleware/v2/metadata"
-	"github.com/itbasis/go-jwt-auth/model"
-	"github.com/rs/zerolog"
+	"github.com/itbasis/go-jwt-auth/v2/model"
+	"github.com/juju/zaputil/zapctx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
@@ -43,18 +43,18 @@ func (receiver *AuthClientInterceptor) UnaryStreamHeaderAuthorizeForwarder() grp
 }
 
 func (receiver *AuthClientInterceptor) interceptor(ctx context.Context) context.Context {
-	logger := zerolog.Ctx(ctx)
+	logger := zapctx.Logger(ctx).Sugar()
 
 	headerValue := grpcMiddlewareMetadata.ExtractIncoming(ctx).Get(model.HeaderAuthorize)
-	logger.Trace().Msgf("headerValue: %s", headerValue)
+	logger.Debugf("headerValue: %s", headerValue)
 
 	if headerValue == "" {
-		logger.Trace().Msg("authentication token was not found")
+		logger.Debug("authentication token was not found")
 
 		return ctx
 	}
 
-	logger.Trace().Msg("Authentication token found - forward it further in the request...")
+	logger.Debug("Authentication token found - forward it further in the request...")
 
 	md := metadata.New(map[string]string{model.HeaderAuthorize: headerValue})
 

@@ -3,15 +3,15 @@ package server
 import (
 	"context"
 
-	"github.com/benbjohnson/clock"
 	grpcAuth "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/auth"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/metadata"
-	itbasisJwtAuthGrpcShared "github.com/itbasis/go-jwt-auth/grpc/shared"
-	itbasisJwtToken "github.com/itbasis/go-jwt-auth/jwt-token"
-	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/jwt-token/impl"
-	itbasisJwtAuthModel "github.com/itbasis/go-jwt-auth/model"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
+	"github.com/itbasis/go-clock"
+	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
+	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
+	itbasisJwtAuthModel "github.com/itbasis/go-jwt-auth/v2/model"
+	"github.com/juju/zaputil/zapctx"
+	"github.com/pkg/errors"
+	"go.uber.org/zap/zapcore"
 )
 
 type AuthServerInterceptor struct {
@@ -21,7 +21,7 @@ type AuthServerInterceptor struct {
 func NewAuthServerInterceptor() *AuthServerInterceptor {
 	jwtToken, err := itbasisJwtTokenImpl.NewJwtToken(clock.New())
 	if err != nil {
-		log.Error().Err(err).Send()
+		zapctx.Default.Sugar().Error(err)
 
 		return nil
 	}
@@ -37,43 +37,37 @@ func NewAuthServerInterceptorWithCustomParser(jwtToken itbasisJwtToken.JwtToken)
 
 func (receiver *AuthServerInterceptor) GetAuthFunc() grpcAuth.AuthFunc {
 	return func(ctx context.Context) (context.Context, error) {
-		logger := zerolog.Ctx(ctx)
+		logger := zapctx.Logger(ctx).Sugar()
 
 		headerValue := metadata.ExtractIncoming(ctx).Get(itbasisJwtAuthModel.HeaderAuthorize)
 		if headerValue == "" {
 			return ctx, nil
 		}
 
-		logger.Trace().Msgf("headerValue: %++v", headerValue)
+		logger.Debugf("headerValue: %++v", headerValue)
 
 		jwtToken, err := grpcAuth.AuthFromMD(ctx, itbasisJwtAuthModel.AuthSchemaBearer)
 		if err != nil {
-			logger.Trace().Err(err).Send()
-
-			return ctx, err
+			return ctx, errors.Wrapf(err, "error getting token")
 		}
 
-		logger.Trace().Msgf(itbasisJwtAuthModel.LogJwtToken, jwtToken)
+		logger.Debugf(itbasisJwtAuthModel.LogJwtToken, jwtToken)
 
 		authUser, err := receiver.jwtToken.Parse(ctx, jwtToken)
 		if err != nil {
-			logger.Error().Err(err).Send()
-			// FIXME handle parsing error
-
-			return ctx, itbasisJwtAuthGrpcShared.ErrAuthenticationRequired.Err()
+			return ctx, errors.Wrapf(err, "token parsing error")
 		}
 
-		logger.Trace().Msgf(itbasisJwtAuthModel.LogAuthUser, authUser)
+		logger.Debugf(itbasisJwtAuthModel.LogAuthUser, authUser)
 
-		newCtx := logger.WithContext(context.WithValue(ctx, itbasisJwtAuthModel.SessionUser{}, authUser))
-
-		logger.UpdateContext(
-			func(c zerolog.Context) zerolog.Context {
-				return c.Str(itbasisJwtAuthModel.LogMdcSessionUserID, authUser.UID.String())
+		newCtx := zapctx.WithFields(
+			context.WithValue(ctx, itbasisJwtAuthModel.SessionUser{}, authUser),
+			zapcore.Field{
+				Key:    itbasisJwtAuthModel.LogMdcSessionUserUID,
+				Type:   zapcore.StringerType,
+				String: authUser.UID.String(),
 			},
 		)
-
-		logger.Debug().Msg("init new context")
 
 		return newCtx, nil
 	}

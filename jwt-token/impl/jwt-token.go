@@ -1,14 +1,15 @@
 package impl
 
 import (
+	"context"
 	"fmt"
 	"time"
 
-	"github.com/benbjohnson/clock"
 	"github.com/golang-jwt/jwt/v5"
-	itbasisCoreUtils "github.com/itbasis/go-core-utils"
-	itbasisJwtToken "github.com/itbasis/go-jwt-auth/jwt-token"
-	"github.com/rs/zerolog/log"
+	"github.com/itbasis/go-clock"
+	itbasisCoreUtils "github.com/itbasis/go-core-utils/v2"
+	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
+	"github.com/juju/zaputil/zapctx"
 )
 
 //goland:noinspection GoNameStartsWithPackageName
@@ -27,11 +28,11 @@ type JwtTokenImpl struct {
 func NewJwtToken(clock clock.Clock) (itbasisJwtToken.JwtToken, error) {
 	config := itbasisJwtToken.Config{}
 
-	if err := itbasisCoreUtils.ReadEnvConfig(&config, nil); err != nil {
+	if err := itbasisCoreUtils.ReadEnvConfig(context.Background(), &config, nil); err != nil {
 		return nil, err //nolint:wrapcheck
 	}
 
-	log.Trace().Msgf("config: %++v", config)
+	zapctx.Default.Sugar().Debugf("config: %++v", config)
 
 	return NewJwtTokenCustomConfig(clock, config)
 }
@@ -45,7 +46,7 @@ func NewJwtTokenCustomConfig(clock clock.Clock, config itbasisJwtToken.Config) (
 
 	if len(config.JwtSecretKey) > 0 {
 		signingMethod := jwt.GetSigningMethod(config.JwtSigningMethod)
-		log.Info().Msgf("Using signing method: %++v", signingMethod)
+		zapctx.Default.Sugar().Infof("Using signing method: %++v", signingMethod)
 
 		if signingMethod == jwt.SigningMethodNone {
 			return nil, fmt.Errorf("%w: %s", jwt.ErrInvalidKeyType, config.JwtSigningMethod)

@@ -9,5 +9,6 @@ import (
 
 func TestJwtTokenImpl(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "JwtTokenImpl")
+
+	RunSpecs(t, "JwtToken")
 }

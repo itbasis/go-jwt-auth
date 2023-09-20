@@ -5,8 +5,8 @@ Makefile
 # Go
 bin/
 report.xml
-go.work
-go.work.sum
+coverage.out
+coverage-*.out
 
 # JetBrains
 .idea/*

@@ -12,11 +12,11 @@ require (
 	github.com/itbasis/go-core-utils/v2 v2.2.2
 	github.com/itbasis/go-test-utils/v2 v2.2.2
 	github.com/juju/zaputil v0.0.0-20190326175239-ef53049637ac
-	github.com/onsi/ginkgo/v2 v2.12.0
+	github.com/onsi/ginkgo/v2 v2.12.1
 	github.com/onsi/gomega v1.27.10
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
-	go.uber.org/zap v1.25.0
+	go.uber.org/zap v1.26.0
 	google.golang.org/grpc v1.58.1
 )
 

@@ -16,8 +16,8 @@ require (
 	github.com/onsi/gomega v1.27.10
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
-	go.uber.org/zap v1.26.0
-	google.golang.org/grpc v1.58.0
+	go.uber.org/zap v1.25.0
+	google.golang.org/grpc v1.58.1
 )
 
 require (

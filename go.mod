@@ -10,7 +10,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0
 	github.com/itbasis/go-clock v1.5.0
 	github.com/itbasis/go-core-utils/v2 v2.2.2
-	github.com/itbasis/go-test-utils/v2 v2.2.2
+	github.com/itbasis/go-test-utils/v2 v2.3.0
 	github.com/juju/zaputil v0.0.0-20190326175239-ef53049637ac
 	github.com/onsi/ginkgo/v2 v2.12.1
 	github.com/onsi/gomega v1.27.10

@@ -61,8 +61,8 @@ github.com/itbasis/go-clock v1.5.0 h1:EFe1qD6NEJYwGJ4UWWnMJm3J8F/MXQ2Y9sO0WcA4Dw
 github.com/itbasis/go-clock v1.5.0/go.mod h1:f2xb+jYG08bJqW2O4aYixoP9fTFeVWZsF2gALiq5hlU=
 github.com/itbasis/go-core-utils/v2 v2.2.2 h1:WkIKcEBaDkS2bQSlkQ2Bm7AJyg3STYABhL6M5y3H4l4=
 github.com/itbasis/go-core-utils/v2 v2.2.2/go.mod h1:kgIaWWHj1UDzL6rxDMfBfceGARrMzYRdKfdV2txjc00=
-github.com/itbasis/go-test-utils/v2 v2.2.2 h1:AUKvNrs0xvfFZ7x5wdaMwyP2ivByCcFoaMaD0450mDs=
-github.com/itbasis/go-test-utils/v2 v2.2.2/go.mod h1:iDUo8OQxTBGTsiWJOVUR+3HAl1UVCl5htT8ADIRZlUE=
+github.com/itbasis/go-test-utils/v2 v2.3.0 h1:VA26C+U/Nayj17hh7gdAGBcfvkK5uL7Mt+pAJPyEFV4=
+github.com/itbasis/go-test-utils/v2 v2.3.0/go.mod h1:L8Ijs6CxrzmCLRdkhaSzPvCfUo3vTNWa+V/xsuTy7wE=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/juju/loggo v0.0.0-20190212223446-d976af380377/go.mod h1:vgyd7OREkbtVEN/8IXZe5Ooef3LQePvuBm9UWj6ZL8U=

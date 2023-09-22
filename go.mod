@@ -7,7 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/golang-jwt/jwt/v5 v5.0.0
-	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0
+	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1
 	github.com/itbasis/go-clock v1.5.0
 	github.com/itbasis/go-core-utils/v2 v2.2.2
 	github.com/itbasis/go-test-utils/v2 v2.3.0

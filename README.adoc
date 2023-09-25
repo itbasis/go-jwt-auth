@@ -1,0 +1,15 @@
+= Go JWT utils
+---
+
+image:https://img.shields.io/github/checks-status/itbasis/go-jwt-auth/main[GitHub branch checks state]
+image:https://img.shields.io/github/go-mod/go-version/itbasis/go-jwt-auth[GitHub go.mod Go version]
+image:https://img.shields.io/badge/godoc-reference-blue.svg[link=https://pkg.go.dev/github.com/itbasis/go-jwt-auth]
+image:https://img.shields.io/github/v/release/itbasis/go-jwt-auth?include_prereleases[GitHub release (release name instead of tag name)]
+https://goreportcard.com/report/github.com/itbasis/go-jwt-auth[image:https://goreportcard.com/badge/github.com/itbasis/go-jwt-auth[Go Report Card]]
+
+Library for authentication via JWT tokens
+
+[NOTE]
+====
+Description and examples of work in progress...
+====

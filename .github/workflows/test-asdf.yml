@@ -19,7 +19,7 @@ jobs:
       - run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
       - run: asdf reshim golang
 
-      - run: go vet -vettool=$(which shadow) ./...
+      - run: go vet -vettool=$(go env GOPATH)/bin/shadow ./...
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3

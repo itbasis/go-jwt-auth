@@ -24,9 +24,11 @@ jobs:
           skip-pkg-cache: true
 
       - run: go install github.com/nunnatsa/ginkgolinter/cmd/ginkgolinter@latest
+      - run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
+      - run: asdf reshim golang
+
       - run: ginkgolinter ./...
 
-      - run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
       - run: $(go env GOPATH)/bin/ginkgo -r -race --cover --coverprofile=.coverage.out --junit-report=junit-report.xml ./...
 
       - name: Test Summary

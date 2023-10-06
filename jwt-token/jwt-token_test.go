@@ -54,7 +54,7 @@ var _ = Describe(
 							Ω(err).Should(Succeed())
 							Ω(accessToken).NotTo(BeEmpty())
 
-							Ω(jwtToken.Parse(ctx, accessToken)).To(HaveValue(Equal(testSessionUser)))
+							Ω(jwtToken.Parse(ctx, accessToken)).To(HaveValue(BeEquivalentTo(testSessionUser)))
 						},
 					)
 				}

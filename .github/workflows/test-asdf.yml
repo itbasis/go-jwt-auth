@@ -14,7 +14,11 @@ jobs:
       - name: Install asdf & tools
         uses: asdf-vm/actions/install@v2
 
-      - run: go get -u golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest && go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
+      - run: go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
+      - run: go install github.com/nunnatsa/ginkgolinter/cmd/ginkgolinter@latest
+      - run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
+      - run: asdf reshim golang
+
       - run: go vet -vettool=$(which shadow) ./...
 
       - name: golangci-lint
@@ -23,9 +27,6 @@ jobs:
           version: latest
           skip-pkg-cache: true
 
-      - run: go install github.com/nunnatsa/ginkgolinter/cmd/ginkgolinter@latest
-      - run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
-      - run: asdf reshim golang
 
       - run: ginkgolinter ./...
 

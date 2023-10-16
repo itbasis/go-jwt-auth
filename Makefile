@@ -2,6 +2,9 @@ go-dependencies:
 	# https://asdf-vm.com/
 	asdf install golang || :
 
+	# https://github.com/securego/gosec
+	go install github.com/securego/gosec/v2/cmd/gosec@latest
+	go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
 	#
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	go install github.com/nunnatsa/ginkgolinter/cmd/ginkgolinter@latest
@@ -10,11 +13,8 @@ go-dependencies:
 	#
 	go install github.com/vektra/mockery/v2@latest
 	#
-	go install github.com/securego/gosec/v2/cmd/gosec@latest
-	go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
-
 	asdf reshim golang || :
-
+	#
 	go get -u -t -v ./... || :
 
 go-generate: go-dependencies
@@ -24,9 +24,9 @@ go-generate: go-dependencies
 go-lint: go-dependencies
 	golangci-lint run
 	ginkgolinter ./...
+	go vet -vettool=$$(go env GOPATH)/bin/shadow ./...
 
 go-test: go-lint
-	go vet -vettool=$$(go env GOPATH)/bin/shadow ./...
 	gosec ./...
 	ginkgo -r -race --cover --coverprofile=.coverage-ginkgo.out --junit-report=junit-report.xml ./...
 	go tool cover -func=.coverage-ginkgo.out -o=.coverage.out

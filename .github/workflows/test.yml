@@ -1,4 +1,4 @@
-name: test Go using asdf
+name: test
 
 on:
   push:

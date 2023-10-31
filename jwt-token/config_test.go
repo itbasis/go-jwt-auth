@@ -8,8 +8,8 @@ import (
 	"github.com/gofrs/uuid/v5"
 	itbasisCoreUtils "github.com/itbasis/go-core-utils/v2"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
+	. "github.com/onsi/ginkgo/v2" //nolint:revive
+	. "github.com/onsi/gomega"    //nolint:revive
 )
 
 const (

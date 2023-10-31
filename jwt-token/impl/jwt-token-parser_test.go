@@ -9,8 +9,8 @@ import (
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
 	_ "github.com/itbasis/go-test-utils/v2"
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
+	. "github.com/onsi/ginkgo/v2" //nolint:revive
+	. "github.com/onsi/gomega"    //nolint:revive
 )
 
 var _ = Describe(

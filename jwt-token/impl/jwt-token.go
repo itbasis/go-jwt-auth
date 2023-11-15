@@ -7,7 +7,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/itbasis/go-clock"
-	itbasisCoreUtils "github.com/itbasis/go-core-utils/v2"
+	itbasisCoreUtilsEnvReader "github.com/itbasis/go-core-utils/v2/env-reader"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	"github.com/juju/zaputil/zapctx"
 )
@@ -28,7 +28,7 @@ type JwtTokenImpl struct {
 func NewJwtToken(clock clock.Clock) (itbasisJwtToken.JwtToken, error) {
 	config := itbasisJwtToken.Config{}
 
-	if err := itbasisCoreUtils.ReadEnvConfig(context.Background(), &config, nil); err != nil {
+	if err := itbasisCoreUtilsEnvReader.ReadEnvConfig(context.Background(), &config, nil); err != nil {
 		return nil, err //nolint:wrapcheck
 	}
 

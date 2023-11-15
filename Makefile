@@ -34,5 +34,7 @@ go-test: go-lint
 
 go-all-tests: go-dependencies go-generate go-lint go-test
 
-go-all: go-all-tests
+go-clean-dependencies: go-dependencies
 	go mod tidy || :
+
+go-all: go-all-tests go-clean-dependencies

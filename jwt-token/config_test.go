@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/gofrs/uuid/v5"
-	itbasisCoreUtils "github.com/itbasis/go-core-utils/v2"
+	itbasisCoreUtilsEnvReader "github.com/itbasis/go-core-utils/v2/env-reader"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	. "github.com/onsi/ginkgo/v2" //nolint:revive
 	. "github.com/onsi/gomega"    //nolint:revive
@@ -36,7 +36,7 @@ var _ = Describe(
 
 		It(
 			"test empty config", func() {
-				Ω(itbasisCoreUtils.ReadEnvConfig(context.Background(), &config, nil)).Should(Succeed())
+				Ω(itbasisCoreUtilsEnvReader.ReadEnvConfig(context.Background(), &config, nil)).Should(Succeed())
 				Ω(config.JwtSecretKey).To(BeEmpty())
 				Ω(config.JwtSigningMethod).To(Equal("HS512"))
 				Ω(config.JwtAccessTokenDurationInSeconds).To(Equal(itbasisJwtToken.TokenDuration(itbasisJwtToken.DefaultAccessTokenDuration)))
@@ -54,7 +54,7 @@ var _ = Describe(
 				Ω(os.Setenv(envJwtAccessTokenDurationInSeconds, "20")).Should(Succeed())
 				Ω(os.Setenv(envJwtRefreshTokenDurationInSeconds, "30")).Should(Succeed())
 
-				Ω(itbasisCoreUtils.ReadEnvConfig(context.Background(), &config, nil)).Should(Succeed())
+				Ω(itbasisCoreUtilsEnvReader.ReadEnvConfig(context.Background(), &config, nil)).Should(Succeed())
 				Ω(config.JwtSecretKey).To(Equal(testKey.String()))
 				Ω(config.JwtSigningMethod).To(Equal("HS256"))
 				Ω(config.JwtAccessTokenDurationInSeconds).To(Equal(itbasisJwtToken.TokenDuration(time.Second * 20)))

@@ -48,10 +48,9 @@ func (receiver *JwtTokenImpl) parseWithSecretKey(ctx context.Context, tokenStrin
 	)
 
 	if err != nil {
-		err = errors.Wrap(itbasisJwtToken.ErrParsingClaims, err.Error())
 		logger.Error(err)
 
-		return nil, err
+		return nil, errors.Wrap(itbasisJwtToken.ErrParsingClaims, err.Error())
 	}
 
 	// TODO check - this seems like a redundant check

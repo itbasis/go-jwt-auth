@@ -62,8 +62,8 @@ github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1 h1:HcUWd006luQPljE73d5sk+
 github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1/go.mod h1:w9Y7gY31krpLmrVU5ZPG9H7l9fZuRu5/3R3S3FMtVQ4=
 github.com/hpcloud/tail v1.0.0 h1:nfCOvKYfkgYP8hkirhJocXT2+zOD8yUNjXaWfTlyFKI=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
-github.com/itbasis/go-clock v1.5.1 h1:5ssVfc4XgWP22E9CH1rBfvVmAJuCzzoOtXXtffwd0oM=
-github.com/itbasis/go-clock v1.5.1/go.mod h1:f2xb+jYG08bJqW2O4aYixoP9fTFeVWZsF2gALiq5hlU=
+github.com/itbasis/go-clock v1.6.0 h1:fl42CV9lX+QIb028yuZWtUKV5Vh4mHIKujGuKeLFVAQ=
+github.com/itbasis/go-clock v1.6.0/go.mod h1:POoB6LUtO2xO/Y/7YPfObKpJL/DIaLjaKejP4eTgz+Q=
 github.com/itbasis/go-core-utils/v2 v2.3.1 h1:vm95BO9up2778n5J5YmHiXvitLoNVqWHRXSZL0onkGE=
 github.com/itbasis/go-core-utils/v2 v2.3.1/go.mod h1:bU0wFC9ZygW0TFAWNJhU2wI51Ntlw9qFOSuthyKRAKE=
 github.com/itbasis/go-test-utils/v2 v2.3.5 h1:x7wcB2UribN4mbkJxia8BfI8V1fYFp3cn9LJ3xogCDA=

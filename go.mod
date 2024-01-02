@@ -8,7 +8,7 @@ require (
 	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1
-	github.com/itbasis/go-clock v1.5.1
+	github.com/itbasis/go-clock v1.6.0
 	github.com/itbasis/go-core-utils/v2 v2.3.1
 	github.com/itbasis/go-test-utils/v2 v2.3.5
 	github.com/juju/zaputil v0.0.0-20190326175239-ef53049637ac

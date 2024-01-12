@@ -12,7 +12,7 @@ require (
 	github.com/itbasis/go-core-utils/v2 v2.3.1
 	github.com/itbasis/go-test-utils/v2 v2.3.5
 	github.com/juju/zaputil v0.0.0-20190326175239-ef53049637ac
-	github.com/onsi/ginkgo/v2 v2.13.2
+	github.com/onsi/ginkgo/v2 v2.14.0
 	github.com/onsi/gomega v1.30.0
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4

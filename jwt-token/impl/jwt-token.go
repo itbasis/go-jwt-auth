@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/itbasis/go-clock"
+	clock "github.com/itbasis/go-clock/v2/pkg"
 	itbasisCoreUtilsEnvReader "github.com/itbasis/go-core-utils/v2/env-reader"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	"github.com/juju/zaputil/zapctx"

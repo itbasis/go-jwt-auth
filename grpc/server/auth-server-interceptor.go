@@ -5,7 +5,7 @@ import (
 
 	grpcAuth "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/auth"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/metadata"
-	"github.com/itbasis/go-clock"
+	"github.com/itbasis/go-clock/v2"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
 	itbasisJwtAuthModel "github.com/itbasis/go-jwt-auth/v2/model"

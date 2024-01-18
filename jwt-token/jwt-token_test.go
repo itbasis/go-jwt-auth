@@ -7,7 +7,7 @@ import (
 
 	"github.com/gofrs/uuid/v5"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/itbasis/go-clock"
+	"github.com/itbasis/go-clock/v2"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
 	itbasisJwtAuthModel "github.com/itbasis/go-jwt-auth/v2/model"

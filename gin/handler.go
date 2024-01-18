@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/itbasis/go-clock"
+	"github.com/itbasis/go-clock/v2"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
 	"github.com/itbasis/go-jwt-auth/v2/model"

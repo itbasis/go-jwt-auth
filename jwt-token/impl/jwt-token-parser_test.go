@@ -5,7 +5,7 @@ import (
 
 	"github.com/dchest/uniuri"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/itbasis/go-clock"
+	"github.com/itbasis/go-clock/v2"
 	itbasisJwtToken "github.com/itbasis/go-jwt-auth/v2/jwt-token"
 	itbasisJwtTokenImpl "github.com/itbasis/go-jwt-auth/v2/jwt-token/impl"
 	_ "github.com/itbasis/go-test-utils/v2"

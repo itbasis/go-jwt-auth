@@ -41,8 +41,13 @@ jobs:
 
     strategy:
       matrix:
-        go: ["1.21.x", ">=1.22.0-rc.1"]
+        go: ["1.21.x"]
+        continueOnError: false
+        include:
+          - go: ">=1.22.0-rc.1"
+            continueOnError: true
 
+    continue-on-error: ${{ matrix.continueOnError }}
     steps:
       - uses: actions/checkout@v4
 

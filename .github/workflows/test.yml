@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         go: ["1.21.x"]
-        continueOnError: false
+        continueOnError: [false]
         include:
           - go: ">=1.22.0-rc.1"
             continueOnError: true

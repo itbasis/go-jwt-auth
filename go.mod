@@ -1,6 +1,6 @@
 module github.com/itbasis/go-jwt-auth/v2
 
-go 1.21
+go 1.21.6
 
 require (
 	github.com/dchest/uniuri v1.2.0
@@ -8,12 +8,12 @@ require (
 	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1
-	github.com/itbasis/go-clock/v2 v2.0.0
+	github.com/itbasis/go-clock/v2 v2.1.0
 	github.com/itbasis/go-core-utils/v2 v2.3.1
-	github.com/itbasis/go-test-utils/v2 v2.3.5
+	github.com/itbasis/go-test-utils/v2 v2.3.6
 	github.com/juju/zaputil v0.0.0-20190326175239-ef53049637ac
 	github.com/onsi/ginkgo/v2 v2.15.0
-	github.com/onsi/gomega v1.31.0
+	github.com/onsi/gomega v1.31.1
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.26.0

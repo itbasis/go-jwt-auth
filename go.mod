@@ -9,7 +9,7 @@ require (
 	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1
 	github.com/itbasis/go-clock/v2 v2.1.0
-	github.com/itbasis/go-core-utils/v2 v2.3.1
+	github.com/itbasis/go-core-utils/v2 v2.3.2
 	github.com/itbasis/go-test-utils/v2 v2.3.6
 	github.com/juju/zaputil v0.0.0-20190326175239-ef53049637ac
 	github.com/onsi/ginkgo/v2 v2.15.0

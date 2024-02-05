@@ -56,8 +56,8 @@ github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
-github.com/google/pprof v0.0.0-20240117000934-35fc243c5815 h1:WzfWbQz/Ze8v6l++GGbGNFZnUShVpP/0xffCPLL+ax8=
-github.com/google/pprof v0.0.0-20240117000934-35fc243c5815/go.mod h1:czg5+yv1E0ZGTi6S6vVK1mke0fV+FaUhNGcd6VRS9Ik=
+github.com/google/pprof v0.0.0-20240130152714-0ed6a68c8d9e h1:E+3PBMCXn0ma79O7iCrne0iUpKtZ7rIcZvoz+jNtNtw=
+github.com/google/pprof v0.0.0-20240130152714-0ed6a68c8d9e/go.mod h1:czg5+yv1E0ZGTi6S6vVK1mke0fV+FaUhNGcd6VRS9Ik=
 github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1 h1:HcUWd006luQPljE73d5sk+/VgYPGUReEVz2y1/qylwY=
 github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.1/go.mod h1:w9Y7gY31krpLmrVU5ZPG9H7l9fZuRu5/3R3S3FMtVQ4=
 github.com/hpcloud/tail v1.0.0 h1:nfCOvKYfkgYP8hkirhJocXT2+zOD8yUNjXaWfTlyFKI=
@@ -66,8 +66,8 @@ github.com/itbasis/go-clock/v2 v2.1.0 h1:O8D37rq2aGrgn9iLl6u5sB190sczVU8iBh7GfgK
 github.com/itbasis/go-clock/v2 v2.1.0/go.mod h1:C2fmavKab/tAL/Q0IgAcd3sRtwwli8/fleTdCS467Gw=
 github.com/itbasis/go-core-utils/v2 v2.3.1 h1:vm95BO9up2778n5J5YmHiXvitLoNVqWHRXSZL0onkGE=
 github.com/itbasis/go-core-utils/v2 v2.3.1/go.mod h1:bU0wFC9ZygW0TFAWNJhU2wI51Ntlw9qFOSuthyKRAKE=
-github.com/itbasis/go-test-utils/v2 v2.3.6 h1:959yP7A36aWAnwZss8E9xqemDHaey4MW5wlLnodVbG8=
-github.com/itbasis/go-test-utils/v2 v2.3.6/go.mod h1:+uvJSDlL8u+G3W97FvBD/s1SNBNPq9TQOARSggcb1Eg=
+github.com/itbasis/go-test-utils/v2 v2.3.8 h1:KJAx82dP6axtlCQTTq2owxi5brvVaWz084ZDfPrweLY=
+github.com/itbasis/go-test-utils/v2 v2.3.8/go.mod h1:WfZqIK/VTD7m+QG6f7pb55qc5Xq8Jxl/trwvgLkPvlY=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/juju/loggo v0.0.0-20190212223446-d976af380377/go.mod h1:vgyd7OREkbtVEN/8IXZe5Ooef3LQePvuBm9UWj6ZL8U=

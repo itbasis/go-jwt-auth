@@ -9,6 +9,8 @@ https://goreportcard.com/report/github.com/itbasis/go-jwt-auth[image:https://gor
 
 Library for authentication via JWT tokens
 
+IMPORTANT: The project has moved to another repository: https://github.com/itbasis/go-tools
+
 [NOTE]
 ====
 Description and examples of work in progress...
